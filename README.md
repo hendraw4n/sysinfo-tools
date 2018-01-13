@@ -3,6 +3,7 @@ System Information Collections Scrips
 
 ## Firmware Report
 **Script for generate firmware currenty installed on linux server**
+
 **How To:** Download "firmware_report.sh" and put on temporary directory and issue below.
 ```bash
 shell> chmod +x firmware_report.sh
