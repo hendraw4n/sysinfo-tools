@@ -25,7 +25,7 @@ Gathering HBA information...
 Compressing files...
 Script complete.
 
-shell>ls -ltr |grep firmware_report
+shell>ls -ltr /tmp/ |grep firmware_report
 drwxr-xr-x 3 root          root              130 Jan 15 07:23 firmware_report
 -rw-r--r-- 1 root          root            80092 Jan 15 07:23 hostname.example.com_firmware_report_2018-01-15.tar.bz2
 ```
