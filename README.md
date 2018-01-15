@@ -1,5 +1,5 @@
 # sysinfo-tools
-System Information Collections Scrips
+System Information Scripts
 
 ## Firmware Report
 **Script for generate firmware currenty installed on linux server**
