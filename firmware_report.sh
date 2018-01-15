@@ -7,10 +7,20 @@ export LANG=C
 # set -x
 # set -o verbose
 
-[[ -d /tmp/firmware_report ]] && rm -rf /tmp/firmware_report
-mkdir /tmp/firmware_report && cd /tmp/firmware_report && mkdir -p firmware/networking firmware/hba firmware/sa firmware/hardware firmware/kernel
-PACKAGE=sysfsutils
-if rpm -qa | grep -q $PACKAGE; then  echo " "; else  echo "$PACKAGE needs to be installed"; exit; fi
+if [ -d "/tmp/firmware_report" ] 
+then 
+ echo " "
+ rm -rf /tmp/firmware_report
+ mkdir /tmp/firmware_report
+else
+ mkdir /tmp/firmware_report 
+fi 
+
+cd /tmp/firmware_report && mkdir -p firmware/networking firmware/hba firmware/sa firmware/hardware firmware/kernel
+
+# echo -e "Check sysfsutils package installed..."
+# PACKAGE=sysfsutils
+# if rpm -qa | grep -q $PACKAGE; then echo "sysfsutils package installed, continue... "; else  echo "$PACKAGE needs to be installed, exit"; exit; fi
 
 echo -e "Gathering system information..."
 date &> date
@@ -61,7 +71,9 @@ cat /proc/driver/cciss/cciss0 &> ./firmware/sa/cciss_firmware_version 2>> error_
 modinfo cciss| head -5 &> ./firmware/sa/cciss_driver_version 2>> error_log
 
 echo -e "Gathering HBA information..."
-for FC in $( ls /sys/class/fc_host ); do systool -c fc_host -v -d $FC >> ./firmware/hba/systool_-v; done
+for FC in $( ls /sys/class/fc_host ); do systool -c fc_host -v -d $FC >> ./firmware/hba/systool_-v; done 2>> error_log
+for FC in $( ls /sys/class/fc_host ); do echo $FC;  cat /sys/class/fc_host/$FC/symbolic_name; done >> ./firmware/hba/ls_fc_host 2>> error_log
+for FC in $( ls /sys/class/scsi_host ); do echo $FC; cat /sys/class/scsi_host/$FC/{model_name,driver_version,fw_version,optrom*}; echo -e "\n"; done >> ./firmware/hba/ls_qlogic_scsi_host 2>> error_log
 modinfo qla2xxx | grep -v firmware | head -5 &> ./firmware/hba/modinfo_qla2xxx_driver 2>> error_log
 
 echo -e "Compressing files..."
