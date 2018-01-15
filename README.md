@@ -9,4 +9,4 @@ System Information Collections Scrips
 shell> chmod +x firmware_report.sh
 shell> ./firmware_report.sh
 ```
-This will create a file containing all info under /tmp/firmware_report directory with the name "/tmp/<hostname>_firmware_report_<date>.tar.bz2"
+This will create a file containing all info under /tmp/firmware_report directory with the name "/tmp/hostname_firmware_report_date.tar.bz2"
